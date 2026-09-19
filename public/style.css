@@ -1,0 +1,363 @@
+@font-face{font-family:'Baloo 2';font-style:normal;font-weight:400 800;font-display:swap;src:url('./fonts/Baloo2-Variable.ttf') format('truetype');}
+/* Remember Your Numbers, a standalone memorization game. */
+
+* { box-sizing: border-box; }
+
+:root {
+  --paper: #fdf8ef;
+  --ink: #3a3335;
+  --soft: #8a8085;
+  --card: #ffffff;
+  --chunk-0: #e5673c; /* coral */
+  --chunk-1: #1f8a8c; /* teal */
+  --chunk-2: #7b5cc4; /* violet */
+  --good: #2e9e5b;
+  --good-soft: #e2f5e9;
+  --oops: #d9534f;
+  --star: #f2b632;
+  --shadow: 0 4px 0 rgba(58, 51, 53, 0.12);
+  --radius: 18px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Baloo 2", "Comic Sans MS", system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+#app {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 16px 16px 40px;
+}
+
+.noscript { text-align: center; font-size: 1.2rem; padding: 40px 0; }
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  min-height: 48px;
+}
+
+.topbar .title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+  color: inherit;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.iconbtn {
+  background: var(--card);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  width: 44px;
+  height: 44px;
+  font-size: 1.2rem;
+  display: grid;
+  place-items: center;
+}
+
+.backbtn {
+  background: var(--card);
+  border-radius: 999px;
+  box-shadow: var(--shadow);
+  padding: 8px 16px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  text-align: center;
+  margin: 18px 0 6px;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--soft);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0 0 22px;
+}
+
+/* Profile pick */
+.profiles {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.profile-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px;
+  font-size: 1.6rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.1s;
+}
+
+.profile-card:active { transform: scale(0.97); }
+.profile-card .emoji { font-size: 2.2rem; }
+
+.grownups {
+  margin-top: 40px;
+  font-size: 0.85rem;
+  color: var(--soft);
+  font-weight: 500;
+}
+.grownups summary { cursor: pointer; font-weight: 700; }
+.grownups p { margin: 8px 0; line-height: 1.45; }
+
+/* Home: number cards */
+.number-cards { display: grid; gap: 14px; }
+
+.number-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px 18px;
+  text-align: left;
+  display: block;
+  width: 100%;
+  transition: transform 0.1s;
+}
+.number-card:active { transform: scale(0.98); }
+
+.number-card .label {
+  font-size: 1.2rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: var(--good-soft);
+  color: var(--good);
+  border-radius: 999px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+.badge.quiz { background: #fdeed3; color: #b07a10; }
+
+.number-card .digits {
+  margin: 8px 0 10px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.number-card .digits.secret { color: var(--soft); letter-spacing: 0.2em; }
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--soft);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.meter {
+  flex: 1;
+  height: 10px;
+  background: #efe8da;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.meter > i {
+  display: block;
+  height: 100%;
+  background: var(--good);
+  border-radius: 999px;
+}
+
+/* Chunk colors */
+.c0 { color: var(--chunk-0); }
+.c1 { color: var(--chunk-1); }
+.c2 { color: var(--chunk-2); }
+
+/* Play screens */
+.prompt {
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 14px 0 6px;
+  min-height: 2em;
+}
+.prompt.oops { color: var(--oops); }
+.prompt.yay { color: var(--good); }
+
+.number-line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.chunk {
+  display: inline-flex;
+  gap: 4px;
+  font-size: 2.1rem;
+  font-weight: 800;
+  background: var(--card);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 8px 12px;
+  border: 3px solid transparent;
+}
+button.chunk { transition: transform 0.1s; }
+button.chunk:active { transform: scale(0.94); }
+.chunk.done { border-color: var(--good); }
+.chunk.mystery { color: var(--soft); }
+
+.digit-box {
+  width: 1.05em;
+  text-align: center;
+}
+.digit-box.empty {
+  border-bottom: 4px solid currentColor;
+  color: inherit;
+  min-height: 1.2em;
+}
+.digit-box.cursor { animation: blink 1s infinite; }
+
+@keyframes blink { 50% { opacity: 0.35; } }
+
+.choices { display: grid; gap: 12px; margin-top: 18px; }
+.choice {
+  background: var(--card);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  padding: 14px;
+  transition: transform 0.1s;
+}
+.choice:active { transform: scale(0.97); }
+.choice.wrong { opacity: 0.4; }
+.choice.right { background: var(--good-soft); color: var(--good); }
+
+/* Keypad */
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-width: 300px;
+  margin: 20px auto 0;
+}
+.key {
+  background: var(--card);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  font-size: 1.9rem;
+  font-weight: 800;
+  padding: 12px 0;
+  transition: transform 0.08s;
+}
+.key:active { transform: scale(0.94); }
+.key.zero { grid-column: 2; }
+.key.shake { animation: shake 0.3s; }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.peek {
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background: #fdeed3;
+  border-radius: 14px;
+  padding: 10px;
+  margin: 12px auto;
+  max-width: 340px;
+}
+
+/* Celebration */
+.celebrate { text-align: center; padding-top: 30px; }
+.celebrate .stars { font-size: 3.4rem; letter-spacing: 0.1em; animation: pop 0.5s; }
+.celebrate h2 { font-size: 1.7rem; font-weight: 800; margin: 12px 0 4px; }
+.celebrate .note { color: var(--soft); font-weight: 600; font-size: 1.05rem; }
+
+@keyframes pop {
+  0% { transform: scale(0.3); }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.actions { display: grid; gap: 12px; margin-top: 26px; }
+.bigbtn {
+  background: var(--good);
+  color: #fff;
+  border-radius: 16px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  padding: 14px;
+  box-shadow: 0 4px 0 rgba(46, 158, 91, 0.4);
+  transition: transform 0.1s;
+}
+.bigbtn:active { transform: scale(0.97); }
+.bigbtn.quiet {
+  background: var(--card);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+
+@media (min-width: 480px) {
+  .profiles { grid-template-columns: 1fr 1fr; }
+  .profile-card { justify-content: center; }
+}
+
+/* Setup uses the same large, calm controls as the learning screens. */
+.notice,.backup-panel,.learner-editor{margin:20px 0;padding:18px;border:2px solid var(--soft);border-radius:16px;background:var(--card);}
+.notice{font-size:1rem;text-align:left;}
+.notice p{margin:0 0 12px;}
+.setup-note{font-size:1rem;max-width:52ch;margin:16px auto;}
+.smallbtn{font:inherit;min-height:44px;padding:9px 16px;border:2px solid currentColor;border-radius:12px;background:var(--card);color:inherit;cursor:pointer;margin:5px;}
+.smallbtn:disabled{opacity:.5;cursor:default;}
+.smallbtn:focus-visible,input:focus-visible{outline:3px solid currentColor;outline-offset:4px;}
+.settings-form,.backup-panel{text-align:left;}
+.settings-form legend{font-size:1.3rem;font-weight:700;padding:0 8px;}
+.field{display:flex;flex-direction:column;gap:5px;margin:14px 0;font-size:1rem;font-weight:700;}
+.field input{min-width:0;width:100%;min-height:48px;font:inherit;border:2px solid currentColor;border-radius:8px;padding:8px 10px;background:var(--card);color:inherit;}
+.number-editor{min-width:0;border:1px solid currentColor;border-radius:12px;margin:20px 0;padding:12px;}
+.learner-editor{min-width:0;}
+.form-error{font-weight:700;}
+.danger{text-decoration:underline;}
+.settings-form .bigbtn,.backup-panel .bigbtn{max-width:100%;white-space:normal;}
+@media(max-width:420px){.learner-editor{padding:12px;}.number-editor{padding:10px;}.number-line{flex-wrap:wrap;}.chunk{max-width:100%;}.digits{overflow-wrap:anywhere;}}
+
+.app-footer{text-align:center;font-size:.9rem;padding:16px 16px 28px;}.app-footer a{color:var(--ink);display:inline-flex;min-height:44px;align-items:center;}dialog{max-width:800px;max-height:85vh;margin:auto;padding:24px;border-radius:16px;}dialog pre{white-space:pre-wrap;overflow-wrap:anywhere;}
+
+.app-footer{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;}.app-footer button{font:inherit;background:none;padding:0;min-height:44px;text-decoration:underline;}.profile-card,h1,h2,.subtitle,.label{overflow-wrap:anywhere;}

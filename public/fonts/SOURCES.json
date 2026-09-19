@@ -1,0 +1,16 @@
+{
+  "font": "Baloo 2",
+  "repository_commit": "c13390277dfb1fcc7415d84ef7ef9cfc1e52f8c1",
+  "files": [
+    {
+      "file": "Baloo2-Variable.ttf",
+      "source": "https://raw.githubusercontent.com/google/fonts/c13390277dfb1fcc7415d84ef7ef9cfc1e52f8c1/ofl/baloo2/Baloo2%5Bwght%5D.ttf",
+      "sha256": "d47a6852548059b1db49a1319d06d499d546c3fa2237cf9eee9c43c8abb025c2"
+    },
+    {
+      "file": "baloo2-OFL.txt",
+      "source": "https://raw.githubusercontent.com/google/fonts/c13390277dfb1fcc7415d84ef7ef9cfc1e52f8c1/ofl/baloo2/OFL.txt",
+      "sha256": "ad09b05dc8bc678c9daf7c4c5f7ef1f55e5726127f4330b2e98e40b9dffcb860"
+    }
+  ]
+}
